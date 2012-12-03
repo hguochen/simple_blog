@@ -38,7 +38,7 @@
 				$fulldisp = 1;
 				$e = array(
 						'title' => 'No Entries Yet',
-						'entry' => '<a href="/simple_blog/admin.php">Post an entry!</a>');
+						'entry' => '<a href="./admin.php">Post an entry!</a>');
 			}
 		}
 		

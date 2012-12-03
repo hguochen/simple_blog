@@ -74,11 +74,9 @@
 ?>
 	
 	<p class="backlink">
-	<?php if($page=='blog'): ?>
-		<a href="/simple_blog/?page=<?php echo $page ?>">
+		<a href="/simple_blog/admin.php?page=<?php echo $page ?>">
 			Post a New Entry
 		</a>
-	<?php endif; ?>
 	</p>
 
 	</div>
