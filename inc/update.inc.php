@@ -1,7 +1,5 @@
 <?php
 //6. Sanitize the input and store it in the entries table
-//7. Obtain the unique ID for the newly created entry
-//8. Send the user to the newly created entry
 if($_SERVER['REQUEST_METHOD']=='POST'
 		&& $_POST['submit']=='Save Entry'
 		&& !empty($_POST['title'])
@@ -19,12 +17,19 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 	$stmt->execute(array($title,$entry));
 	$stmt->closeCursor();//close the cursor, enable the statement to be executed again
 	
-	//Continue processing information
+	//Get the ID of the query we just saved
+	$id_obj = $db->query("SELECT LAST_INSERT_ID()");
+	$id = $id_obj->fetch();
+	$id_obj->closeCursor();
+	
+	//Send the user to the new entry
+	header('Location: ../admin.php?id='.$id[0]);
+	exit;
 	
 } else {
 	
 	//If both conditions aren't met, sends the user back to the main page
-	header('Location: ../admin.php');
+	header('Location: ../admin.php');//go up one folder
 	exit;
 }
 
