@@ -5,11 +5,19 @@
 	//Open a database connection
 	$db = new PDO(DB_INFO, DB_USER, DB_PASS);
 	
+	//Figure out what page is being requested(default is blog)
+	//Perform basic sanitization on the variable as well
+	if(isset($_GET['page'])) {
+		$page = htmlentities(strip_tags($_GET['page']));
+	} else {
+		$page = 'blog';
+	}
+	
 	//Determine if an entry ID was passed in the URL
 	$id = (isset($_GET['id']) ? (int) $_GET['id'] : NULL);
 	
 	//Load the entries
-	$e = retrieveEntries($db, $id);
+	$e = retrieveEntries($db, $page, $id);
 	
 	//Get the fulldisp flag and remove it from the array
 	$fulldisp = array_pop($e);
