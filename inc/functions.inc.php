@@ -1,5 +1,5 @@
 <?php
-	function retrieveEntries($db, $id=NULL) {
+	function retrieveEntries($db, $page, $id=NULL) {
 		//If an entry ID was supplied, load the associated entry
 		if(isset($id)) {
 			$sql = "SELECT title, entry
@@ -16,16 +16,25 @@
 			$fulldisp = 1;
 			
 		} else {
-			//Entry ID was not supplied, load all entry titles
-			$sql = "SELECT id, title
-			FROM entries
-			ORDER BY created DESC";
+			//Entry ID was not supplied, load all entry titles for the page
+			$sql = "SELECT id, page, title, entry
+					FROM entries
+					WHERE page=?
+					ORDER BY created DESC";
+			$stmt = $db->prepare($sql);
+			$stmt->execute(array($page));
+			
+			$e = NULL;
+			
+			while($row = $stmt->fetch()) {
+				$e[] = $row;
+			}
 			//Loop through the returned results and store as an array
-			foreach($db->query($sql) as $row) {
+			/*foreach($db->query($sql) as $row) {
 				$e[] = array(
 						'id'=> $row['id'],
 						'title'=> $row['title']);
-			}
+			}*/
 			//Set the fulldisp flag for multiple entries
 			$fulldisp = 0;
 			
