@@ -29,12 +29,7 @@
 			while($row = $stmt->fetch()) {
 				$e[] = $row;
 			}
-			//Loop through the returned results and store as an array
-			/*foreach($db->query($sql) as $row) {
-				$e[] = array(
-						'id'=> $row['id'],
-						'title'=> $row['title']);
-			}*/
+			
 			//Set the fulldisp flag for multiple entries
 			$fulldisp = 0;
 			

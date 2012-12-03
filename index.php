@@ -49,9 +49,11 @@
 ?>
 	<h2> <?php echo $e['title'] ?></h2>
 	<p> <?php echo $e['entry'] ?></p>
+	<?php if($page=='blog'): ?>
 	<p class="backlink">
 		<a href="./">Back to Latest Entries</a>
 	</p>
+	<?php endif; ?>
 <?php  
 
 } else {
@@ -70,9 +72,13 @@
 	} //end of foreach statements
 } //end of else statements
 ?>
-
+	
 	<p class="backlink">
-		<a href="admin.php">Post a New Entry</a>
+	<?php if($page=='blog'): ?>
+		<a href="/simple_blog/?page=<?php echo $page ?>">
+			Post a New Entry
+		</a>
+	<?php endif; ?>
 	</p>
 
 	</div>
