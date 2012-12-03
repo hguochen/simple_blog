@@ -21,7 +21,7 @@
 			FROM entries
 			ORDER BY created DESC";
 			//Loop through the returned results and store as an array
-			foreach($db->prepare($sql) as $row) {
+			foreach($db->query($sql) as $row) {
 				$e[] = array(
 						'id'=> $row['id'],
 						'title'=> $row['title']);
@@ -34,7 +34,7 @@
 				$fulldisp = 1;
 				$e = array(
 						'title' => 'No Entries Yet',
-						'entry' => '<a href="../admin.php">Post an entry!</a>');
+						'entry' => '<a href="/simple_blog/admin.php">Post an entry!</a>');
 			}
 		}
 		

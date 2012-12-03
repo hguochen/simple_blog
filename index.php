@@ -46,8 +46,21 @@
 	</p>
 <?php  
 
-} //end the if statement 
-
+} else {
+	//if the full display flag is 0, format linked entry titles
+	//Loop through each entry 
+	foreach ($e as $entry) { 
+		
+?>
+	
+	<p>
+		<a href="?id=<?php echo $entry['id']?>">
+			<?php echo $entry['title'] ?>
+		</a>
+	</p>
+<?php 
+	} //end of foreach statements
+} //end of else statements
 ?>
 
 	<p class="backlink">
