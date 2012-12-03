@@ -10,6 +10,12 @@
 	
 	//Load the entries
 	$e = retrieveEntries($db, $id);
+	
+	//Get the fulldisp flag and remove it from the array
+	$fulldisp = array_pop($e);
+	
+	//Sanitize the data
+	$e = sanitizeData($e);
 ?>
 <!DOCTYPE html
 	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -27,17 +33,23 @@
 	<h1> Simple Blog Application </h1>
 	<div id="entries">
 <?php
-	//Database layer
-	//1. Connect to the database
-	//2. Retrieve all entry titles and IDs if no entry ID was supplied
-	//3. Retrieve an entry title and entry if an ID was supplied
-	//Business Layer
-	//1. Sanitize the data to prepare it for display
 	//Presentation Layer
 	//1. Present a list of linked entry titles if no entry ID was supplied
 	//2. Present the entry title and entry if an ID was supplied
-	
+	//If the full display flag is set, show the entry
+	if($fulldisp == 1) {	
 ?>
+	<h2> <?php echo $e['title'] ?></h2>
+	<p> <?php echo $e['entry'] ?></p>
+	<p class="backlink">
+		<a href="./">Back to Latest Entries</a>
+	</p>
+<?php  
+
+} //end the if statement 
+
+?>
+
 	<p class="backlink">
 		<a href="admin.php">Post a New Entry</a>
 	</p>
