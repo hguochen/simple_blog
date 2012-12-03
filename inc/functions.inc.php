@@ -2,7 +2,19 @@
 	function retrieveEntries($db, $id=NULL) {
 		//If an entry ID was supplied, load the associated entry
 		if(isset($id)) {
-			//Load specified entry
+			$sql = "SELECT title, entry
+					FROM entries
+					WHERE id=?
+					LIMIT 1";
+			$stmt = $db->prepare($sql);
+			$stmt->execute(array($_GET['id']));//executes a prepared statement
+			
+			//Save the returned entry array
+			$e = $stmt->fetch(); //fetches the next row from the result set
+			
+			//Set the fulldisp flag for a single entry
+			$fulldisp = 1;
+			
 		} else {
 			//Entry ID was not supplied, load all entry titles
 			$sql = "SELECT id, title
@@ -25,5 +37,10 @@
 						'entry' => '<a href="../admin.php">Post an entry!</a>');
 			}
 		}
+		
+		//Add the $fulldisp flag to the end of the array
+		array_push($e, $fulldisp);
+		
+		return $e;
 	}
 ?>
