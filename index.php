@@ -1,3 +1,16 @@
+<?php 
+	include_once 'inc/functions.inc.php';
+	include_once 'inc/db.inc.php';
+	
+	//Open a database connection
+	$db = new PDO(DB_INFO, DB_USER, DB_PASS);
+	
+	//Determine if an entry ID was passed in the URL
+	$id = (isset($_GET['id']) ? (int) $_GET['id'] : NULL);
+	
+	//Load the entries
+	$e = retrieveEntries($db, $id);
+?>
 <!DOCTYPE html
 	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
