@@ -23,13 +23,13 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 	$id_obj->closeCursor();
 	
 	//Send the user to the new entry
-	header('Location: ../admin.php?id='.$id[0]);
+	header('Location: ../?id='.$id[0]);
 	exit;
 	
 } else {
 	
 	//If both conditions aren't met, sends the user back to the main page
-	header('Location: ../admin.php');//go up one folder
+	header('Location: ../');//go up one folder
 	exit;
 }
 
