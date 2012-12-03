@@ -14,7 +14,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 			(title,entry) 
 			VALUES(?,?)";
 	$stmt = $db->prepare($sql);
-	$stmt->execute(array($title,$entry));
+	$stmt->execute(array($_POST['title'],$_POST['entry']));
 	$stmt->closeCursor();//close the cursor, enable the statement to be executed again
 	
 	//Get the ID of the query we just saved
