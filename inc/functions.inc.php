@@ -43,4 +43,14 @@
 		
 		return $e;
 	}
+
+	function sanitizeData($data) {
+		if(!is_array($data)) {
+			return strip_tags($data, "<a>");
+		} else {
+			//if data is an array, process each element
+			//call sanitizeData recursively for each array element
+			return array_map('sanitizeData', $data); 
+		}
+	}
 ?>
