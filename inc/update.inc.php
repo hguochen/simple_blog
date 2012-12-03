@@ -2,6 +2,7 @@
 //6. Sanitize the input and store it in the entries table
 if($_SERVER['REQUEST_METHOD']=='POST'
 		&& $_POST['submit']=='Save Entry'
+		&& !empty($_POST['page'])
 		&& !empty($_POST['title'])
 		&& !empty($_POST['entry'])) {
 	
@@ -11,11 +12,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 	
 	//Save the entry into the database
 	$sql = "INSERT INTO entries 
-			(title,entry) 
-			VALUES(?,?)";
+			(page,title,entry) 
+			VALUES(?,?,?)";
 	$stmt = $db->prepare($sql);
-	$stmt->execute(array($_POST['title'],$_POST['entry']));
+	$stmt->execute(array($_POST['page'],$_POST['title'],$_POST['entry']));
 	$stmt->closeCursor();//close the cursor, enable the statement to be executed again
+	
+	//Sanitize the information for use in the success URL
+	$page = htmlentities(strip_tags($_POST['page']));
 	
 	//Get the ID of the query we just saved
 	$id_obj = $db->query("SELECT LAST_INSERT_ID()");
@@ -23,7 +27,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 	$id_obj->closeCursor();
 	
 	//Send the user to the new entry
-	header('Location: ../?id='.$id[0]);
+	header('Location: ../?page='.$page.'&id='.$id[0]);
 	exit;
 	
 } else {
