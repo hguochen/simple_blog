@@ -5,6 +5,7 @@
 <head>
 	<meta http-equiv="Content-Type"
 		content="text/html;charset=utf-8" />
+	<link rel="stylesheet" href="css/default.css" type="text/css" />
 	<title> Simple Blog </title>
 </head>
 
