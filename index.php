@@ -14,10 +14,19 @@
 	<h1> Simple Blog Application </h1>
 	<div id="entries">
 <?php
-// Format the entries from the database
+	//Database layer
+	//1. Connect to the database
+	//2. Retrieve all entry titles and IDs if no entry ID was supplied
+	//3. Retrieve an entry title and entry if an ID was supplied
+	//Business Layer
+	//1. Sanitize the data to prepare it for display
+	//Presentation Layer
+	//1. Present a list of linked entry titles if no entry ID was supplied
+	//2. Present the entry title and entry if an ID was supplied
+	
 ?>
 	<p class="backlink">
-		<a href="/admin.php">Post a New Entry</a>
+		<a href="admin.php">Post a New Entry</a>
 	</p>
 
 	</div>
