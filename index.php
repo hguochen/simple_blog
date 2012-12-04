@@ -12,12 +12,11 @@
 	} else {
 		$page = 'blog';
 	}
-	
-	//Determine if an entry ID was passed in the URL
-	$id = (isset($_GET['id']) ? (int) $_GET['id'] : NULL);
+	//Determine if an entry URL was passed
+	$url = (isset($_GET['url'])) ? $_GET['url'] : NULL;
 	
 	//Load the entries
-	$e = retrieveEntries($db, $page, $id);
+	$e = retrieveEntries($db, $page, $url);
 	
 	//Get the fulldisp flag and remove it from the array
 	$fulldisp = array_pop($e);
@@ -41,11 +40,11 @@
 	<h1> Simple Blog Application </h1>
 	<div id="entries">
 <?php
-	//Presentation Layer
-	//1. Present a list of linked entry titles if no entry ID was supplied
-	//2. Present the entry title and entry if an ID was supplied
-	//If the full display flag is set, show the entry
-	if($fulldisp == 1) {	
+
+	if($fulldisp == 1) {
+		//Get the URL if one wasn't passed
+		$url = (isset($url)) ? $url : $e['url'];
+			
 ?>
 	<h2> <?php echo $e['title'] ?></h2>
 	<p> <?php echo $e['entry'] ?></p>
@@ -64,8 +63,8 @@
 ?>
 	
 	<p>
-		<a href="?id=<?php echo $entry['id']?>">
-			<?php echo $entry['title'] ?>
+		<a href="/simple_blog/<?php echo $entry['page'] ?>/<?php echo $entry['url'] ?>">
+			<?php echo $entry['title']; ?>
 		</a>
 	</p>
 <?php 
@@ -74,7 +73,7 @@
 ?>
 	
 	<p class="backlink">
-		<a href="/simple_blog/admin.php?page=<?php echo $page ?>">
+		<a href="/simple_blog/admin/<?php echo $page ?>">
 			Post a New Entry
 		</a>
 	</p>

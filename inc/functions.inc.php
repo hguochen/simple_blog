@@ -2,12 +2,12 @@
 	function retrieveEntries($db, $page, $url=NULL) {
 		//If an entry url was supplied, load the associated entry
 		if(isset($url)) {
-			$sql = "SELECT title, entry
+			$sql = "SELECT id, page, title, entry
 					FROM entries
 					WHERE url=?
 					LIMIT 1";
 			$stmt = $db->prepare($sql);
-			$stmt->execute(array($_GET['url']));//executes a prepared statement
+			$stmt->execute(array($url));//executes a prepared statement $_GET['url']
 			
 			//Save the returned entry array
 			$e = $stmt->fetch(); //fetches the next row from the result set

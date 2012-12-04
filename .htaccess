@@ -24,6 +24,6 @@ RewriteRule ^admin/?$ admin.php [NC,L]
 RewriteRule ^(\w+)/?$ index.php?page=$1
 
 #set up rule for page and entry urls
-# ^(\w+) means it matches any word character that srats the url path until the first forward slash
+# ^(\w+) means it matches any word character that starts the url path until the first forward slash
 #([\w-]+) creates a second backreference to char class, which is a group of char enclosed in square brackets. + means 1/more chars will be matched
-RewriteRule ^(\w+)/([\w-]+) index.php?page=$1&$url=$2
+RewriteRule ^(\w+)/([\w-]+) index.php?page=$1&url=$2
