@@ -1,7 +1,29 @@
+# Let the server know that URL rewriting is allowed in this directory
 RewriteEngine on
+
+#Which folder to use as a base when rewriting. User forward slash / to set the root folder
 RewriteBase /simple_blog/
+
+#URL that calls a file ending with the extensions will match the pattern. $ means the match must fall at end of URL
+#Stop rewriting when the following patterns are matched
 RewriteRule \.(gif|jpg|png|css|js|inc\.php)$ - [L]
+
+#Set up a rule for admin page access
+#Catch any url that begins with admin/ and take the rest of string and pass it as page variable
+# ^ means you require that the url path start with admin/
+# then use shorthand \w+ to store one or more word characters(a-z, 0-9, and _) as a backreference, equals to a variable in PHP
+#Set the flags to NC, which is non case sensitive. L means more rewriting will occur if this rule is matched
 RewriteRule ^admin/(\w+) admin.php?page=$1 [NC,L]
+
+#makes sure that the user has used either http://localhost/simple_blog/admin or ../admin/
 RewriteRule ^admin/?$ admin.php [NC,L]
+
+#set up rule for page only urls
+#captures the beginnings of url path, stopping at the first forward slash. $ means can't user additional char after the first forward slash, or rule won't match
+#covers you if the user enters a url without a trailing slash
 RewriteRule ^(\w+)/?$ index.php?page=$1
+
+#set up rule for page and entry urls
+# ^(\w+) means it matches any word character that srats the url path until the first forward slash
+#([\w-]+) creates a second backreference to char class, which is a group of char enclosed in square brackets. + means 1/more chars will be matched
 RewriteRule ^(\w+)/([\w-]+) index.php?page=$1&$url=$2
