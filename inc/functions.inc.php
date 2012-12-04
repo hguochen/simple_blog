@@ -1,13 +1,13 @@
 <?php
-	function retrieveEntries($db, $page, $id=NULL) {
-		//If an entry ID was supplied, load the associated entry
-		if(isset($id)) {
+	function retrieveEntries($db, $page, $url=NULL) {
+		//If an entry url was supplied, load the associated entry
+		if(isset($url)) {
 			$sql = "SELECT title, entry
 					FROM entries
-					WHERE id=?
+					WHERE url=?
 					LIMIT 1";
 			$stmt = $db->prepare($sql);
-			$stmt->execute(array($_GET['id']));//executes a prepared statement
+			$stmt->execute(array($_GET['url']));//executes a prepared statement
 			
 			//Save the returned entry array
 			$e = $stmt->fetch(); //fetches the next row from the result set
@@ -16,8 +16,8 @@
 			$fulldisp = 1;
 			
 		} else {
-			//Entry ID was not supplied, load all entry titles for the page
-			$sql = "SELECT id, page, title, entry
+			//Entry url was not supplied, load all entry info for the page
+			$sql = "SELECT id, page, title, entry, url
 					FROM entries
 					WHERE page=?
 					ORDER BY created DESC";
