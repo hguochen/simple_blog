@@ -73,7 +73,7 @@
 ?>
 	
 	<p class="backlink">
-		<a href="/simple_blog/admin/<?php echo $page ?>">
+		<a href="/simple_blog/admin">
 			Post a New Entry
 		</a>
 	</p>
