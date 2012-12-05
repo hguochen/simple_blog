@@ -27,11 +27,14 @@
 			$e = NULL;
 			
 			while($row = $stmt->fetch()) {
-				$e[] = $row;
+				if($page=='blog') {
+					$e[] = $row;
+					$fulldisp = 0;
+				} else {
+					$e = $row;
+					$fulldisp = 1;
+				}
 			}
-			
-			//Set the fulldisp flag for multiple entries
-			$fulldisp = 0;
 			
 			//If no entries were returned, display a default message and set the fulldisp flag to display a single entry
 			if(!is_array($e)) {

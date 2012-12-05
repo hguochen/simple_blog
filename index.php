@@ -38,6 +38,11 @@
 
 <body>
 	<h1> Simple Blog Application </h1>
+	<ul id = "menu">
+		<li><a href="/simple_blog/blog/">Blog</a></li>
+		<li><a href="/simple_blog/about/">About the Author</a></li>
+	</ul>
+	
 	<div id="entries">
 <?php
 
