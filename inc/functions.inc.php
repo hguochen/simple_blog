@@ -57,4 +57,13 @@
 			return array_map('sanitizeData', $data); 
 		}
 	}
+	
+	function makeUrl($title) {
+		$patterns = array(
+				'/\s+/',//forward slashes /, are delimiters/ enclosing something in a delimiter is considered a pattern
+				'/(?!-)\W+/'//if the following matches can be made without using the character noted, consider it valid.(?!) is the syntax
+		);
+		$replacements = array('-','');
+		return preg_replace($patterns, $replacements, strtolower($title));
+	}
 ?>
