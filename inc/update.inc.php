@@ -39,7 +39,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 } else {
 	
 	//If both conditions aren't met, sends the user back to the main page
-	header('Location: /simple_blog/');//go up one folder
+	header('Location: /simple_blog/');
 	exit;
 }
 
