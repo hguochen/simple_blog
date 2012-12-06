@@ -69,4 +69,16 @@
 		$replacements = array('-','');
 		return preg_replace($patterns, $replacements, strtolower($title));
 	}
+	
+	function adminLinks($page,$url) {
+		//Format the link to be followed for each option
+		$editURL = "/simple_blog/admin/$page/$url";
+		$deleteURL = "/simple_blog/admin/delete/$url";
+		
+		//Make a hyperlink and addit to an array
+		$admin['edit'] = "<a href=\"$editURL\">edit</a>";
+		$admin['delete'] = "<a href=\"$deleteURL\">delete</a>";
+		
+		return $admin;
+	}
 ?>
