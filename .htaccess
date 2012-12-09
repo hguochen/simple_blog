@@ -18,7 +18,7 @@ RewriteRule ^admin/(\w+)(|/)$ admin.php?page=$1 [NC,L]
 RewriteRule ^admin/(\w+)/([\w-]+) admin.php?page=$1&url=$2 [NC,L]
 
 #makes sure that the user has used either http://localhost/simple_blog/admin or ../admin/
-#RewriteRule ^admin/?$ admin.php [NC,L]
+RewriteRule ^admin/?$ admin.php [NC,L]
 
 #set up rule for page only urls
 #captures the beginnings of url path, stopping at the first forward slash. $ means can't user additional char after the first forward slash, or rule won't match

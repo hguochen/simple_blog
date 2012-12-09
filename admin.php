@@ -13,10 +13,29 @@
 		$page = 'blog';
 	}
 	
+	if(isset($_POST['action']) && $_POST['action'] == 'delete') {
+		if($_POST['submit']=='Yes') {
+			$url = htmlentities(strip_tags($_POST['url']));
+			if(deleteEntry($db, $url)) {
+				header("Location: /simple_blog/");
+				exit;
+			} else {
+				exit("Error deleting the entry!");
+			}
+		} else {
+			header("Location: /simple_blog/blog/$url");
+			exit;
+		}
+	}
+	
 	if(isset($_GET['url'])) {
 		//Do basic sanitization of the url variable
 		$url = htmlentities(strip_tags($_GET['url']));
 		
+		//Check if the entry should be deleted
+		if($page == 'delete') {
+			$confirm = confirmDelete($db, $url);
+		}
 		//Set the legend of the form
 		$legend = "Edit This Entry";
 		
@@ -51,6 +70,12 @@
 <body>
 	<h1> Simple Blog Application </h1>
 	
+	<?php 
+		if($page =='delete'): {
+			echo $confirm;
+		}
+		else :
+	?>
 	<form method="post" action="inc/update.inc.php">
 		<fieldset>
 			<legend><?php echo $legend ?></legend>
@@ -67,6 +92,7 @@
 			<input type="submit" name="submit" value="Cancel" />
 		</fieldset>
 	</form>
-</body>
+	<?php endif;?>
+	</body>
 
 </html>

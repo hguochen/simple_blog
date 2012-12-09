@@ -16,14 +16,32 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 	include_once 'db.inc.php';
 	$db = new PDO(DB_INFO, DB_USER, DB_PASS);
 	
-	//Save the entry into the database
-	$sql = "INSERT INTO entries 
-			(page,title,entry,url) 
-			VALUES(?,?,?,?)";
-	$stmt = $db->prepare($sql);
-	$stmt->execute(array($_POST['page'],$_POST['title'],$_POST['entry'],$url));
-	$stmt->closeCursor();//close the cursor, enable the statement to be executed again
-	
+	//Edit an existing entry
+	if(!empty($_POST['id'])) {
+		$sql = "UPDATE entries
+				SET title=?, entry=?, url=?
+				WHERE id=?
+				LIMIT 1";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(
+				array(
+					$_POST['title'],
+					$_POST['entry'],
+					$url,
+					$_POST['id']
+				)
+			);
+		$stmt->closeCursor();
+	} else { 
+	//Create a new entry
+		//Save the entry into the database
+		$sql = "INSERT INTO entries 
+				(page,title,entry,url) 
+				VALUES(?,?,?,?)";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array($_POST['page'],$_POST['title'],$_POST['entry'],$url));
+		$stmt->closeCursor();//close the cursor, enable the statement to be executed again
+	}
 	//Sanitize the information for use in the success URL
 	$page = htmlentities(strip_tags($_POST['page']));
 	
