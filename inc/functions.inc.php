@@ -2,7 +2,7 @@
 	function retrieveEntries($db, $page, $url=NULL) {
 		//If an entry url was supplied, load the associated entry
 		if(isset($url)) {
-			$sql = "SELECT id, page, title, image, entry
+			$sql = "SELECT id, page, title, image, entry, created
 					FROM entries
 					WHERE url=?
 					LIMIT 1";
@@ -17,7 +17,7 @@
 			
 		} else {
 			//Entry url was not supplied, load all entry info for the page
-			$sql = "SELECT id, page, title, image, entry, url
+			$sql = "SELECT id, page, title, image, entry, url, created
 					FROM entries
 					WHERE page=?
 					ORDER BY created DESC";

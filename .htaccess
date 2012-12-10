@@ -6,7 +6,7 @@ RewriteBase /simple_blog/
 
 #URL that calls a file ending with the extensions will match the pattern. $ means the match must fall at end of URL
 #Stop rewriting when the following patterns are matched
-RewriteRule \.(gif|jpg|png|css|js|inc\.php)$ - [L]
+RewriteRule \.(gif|jpg|png|css|ico|swf|js|inc\.php|php)$ - [L]
 
 #Set up a rule for admin page access
 #Catch any url that begins with admin/ and take the rest of string and pass it as page variable
