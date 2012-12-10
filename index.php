@@ -33,6 +33,9 @@
 	<meta http-equiv="Content-Type"
 		content="text/html;charset=utf-8" />
 	<link rel="stylesheet" href="/simple_blog/css/default.css" type="text/css" />
+	<link rel="alternate" type="application/rss+xml"
+		title="My Simple Blog - RSS 2.0"
+		href="/simple_blog/feeds/rss.php" />
 	<title> Simple Blog </title>
 </head>
 
@@ -90,6 +93,11 @@
 	<p class="backlink">
 		<a href="/simple_blog/admin">
 			Post a New Entry
+		</a>
+	</p>
+	<p>
+		<a href="/simple_blog/feeds/rss.php">
+			Subscribe via RSS!
 		</a>
 	</p>
 
