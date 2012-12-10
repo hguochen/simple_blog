@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 	if(isset($_FILES['image']['tmp_name'])) {
 		try {
 			//Instantiate the class and set a save path
-			$img = new ImageHandler("/simple_blog");
+			$img = new ImageHandler("/simple_blog/images/");
 			
 			//Process the file and store the returned path
 			$img_path = $img->processUploadedImage($_FILES['image']);
