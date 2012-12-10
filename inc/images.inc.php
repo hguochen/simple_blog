@@ -33,5 +33,21 @@
 			}
 			return $filepath;
 		}
+		
+		/*Ensures that the save directory exists
+		 * Checks for the existence fo the supplied save directory,
+		 * and creates the directory if it doesn't exist. Creation is recursive
+		 * @param void
+		 * @return void
+		 * */
+		private function checkSaveDir() {
+			//Determine the path to check
+			$path = $_SERVER['DOCUMENT_ROOT'].$this->save_dir;
+			
+			//Checks if the directory exists
+			if(!is_dir($path)) {
+				//Create the directory
+			}
+		}
 	}
 ?>

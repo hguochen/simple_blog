@@ -3,7 +3,7 @@
 //include the functions so you can create a URL
 include_once 'functions.inc.php';
 //include the image handling class
-include_once 'functions.inc.php';
+include_once 'images.inc.php';
 
 if($_SERVER['REQUEST_METHOD']=='POST'
 		&& $_POST['submit']=='Save Entry'
