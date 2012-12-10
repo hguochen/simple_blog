@@ -52,10 +52,13 @@
 		
 		//Build the admin links
 		$admin = adminLinks($page, $url); //admin is an array of edit and delete links
+		
+		//Format the image if one exists
+		$img = formatImage($e['image'], $e['title']);
 			
 ?>
 	<h2> <?php echo $e['title'] ?></h2>
-	<p> <?php echo $e['entry'] ?></p>
+	<p> <?php echo $img, $e['entry'] ?></p>
 	<p>
 		<?php echo $admin['edit'] ?>
 		<?php if($page=='blog') echo $admin['delete'] ?>

@@ -21,9 +21,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 			
 			//Process the file and store the returned path
 			$img_path = $img->processUploadedImage($_FILES['image']);
-			
-			//Output the uploaded image as it was saved
-			echo '<img src="',$img_path, '" /><br/>';
 		}
 		catch(Exception $e) {
 			//If an error occurred, output your custom error message
@@ -45,13 +42,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 	//Edit an existing entry
 	if(!empty($_POST['id'])) {
 		$sql = "UPDATE entries
-				SET title=?, entry=?, url=?
+				SET title=?, image=?, entry=?, url=?
 				WHERE id=?
 				LIMIT 1";
 		$stmt = $db->prepare($sql);
 		$stmt->execute(
 				array(
 					$_POST['title'],
+					$img_path,
 					$_POST['entry'],
 					$url,
 					$_POST['id']
@@ -62,10 +60,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 	//Create a new entry
 		//Save the entry into the database
 		$sql = "INSERT INTO entries 
-				(page,title,entry,url) 
-				VALUES(?,?,?,?)";
+				(page,title,image,entry,url) 
+				VALUES(?,?,?,?,?)";
 		$stmt = $db->prepare($sql);
-		$stmt->execute(array($_POST['page'],$_POST['title'],$_POST['entry'],$url));
+		$stmt->execute(array($_POST['page'],$_POST['title'],$img_path,$_POST['entry'],$url));
 		$stmt->closeCursor();//close the cursor, enable the statement to be executed again
 	}
 	//Sanitize the information for use in the success URL
