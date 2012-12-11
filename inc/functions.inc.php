@@ -114,4 +114,23 @@ FORM;
 			return NULL;
 		}
 	}
+	
+	function createUserForm() {
+		return <<<FORM
+	<form action="/simple_blog/inc/update.inc.php" method="post">
+		<fieldset>
+				<legend>Create a New Administrator</legend>
+				<label>Username
+					<input type="text" name="username" maxlength="75" />
+				</label>
+				<label>Password
+					<input type="password" name="password" />
+				</label>
+				<input type="submit" name="submit" value="Create" />
+				<input type="submit" name="submit" value="Cancel" />
+				<input type="hidden" name="action" value="createuser" />
+		</fieldset>			
+	</form>	
+FORM;
+	}
 ?>

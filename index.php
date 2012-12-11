@@ -1,4 +1,7 @@
 <?php 
+	
+	session_start();	
+
 	include_once 'inc/functions.inc.php';
 	include_once 'inc/db.inc.php';
 	
@@ -46,6 +49,12 @@
 		<li><a href="/simple_blog/about/">About the Author</a></li>
 	</ul>
 	
+<?php  if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1): ?>
+	<p id="control_panel">
+		You are logged in!
+		<a href="/simple_blog/inc/update.inc.php?action=logout">Logout</a>
+	</p>
+<?php endif; ?>
 	<div id="entries">
 <?php
 
@@ -53,9 +62,12 @@
 		//Get the URL if one wasn't passed
 		$url = (isset($url)) ? $url : $e['url'];
 		
+		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) {
 		//Build the admin links
 		$admin = adminLinks($page, $url); //admin is an array of edit and delete links
-		
+		} else {
+			$admin = array('edit'=>NULL, 'delete'=>NULL);
+		}
 		//Format the image if one exists
 		$img = formatImage($e['image'], $e['title']);
 			
@@ -101,9 +113,15 @@
 ?>
 	
 	<p class="backlink">
+	<?php 
+		if($page == 'blog'
+			&& isset($_SESSION['loggedin'])
+			&& $_SESSION['loggedin'] == 1):
+	?>
 		<a href="/simple_blog/admin">
 			Post a New Entry
 		</a>
+	<?php endif; ?>
 	</p>
 	<p>
 		<a href="/simple_blog/feeds/rss.php">

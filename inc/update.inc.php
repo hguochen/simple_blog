@@ -1,4 +1,6 @@
 <?php
+	//Start the session
+	session_start();
 	
 //include the functions so you can create a URL
 include_once 'functions.inc.php';
@@ -133,6 +135,54 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 			exit;
 		}
 		
+	}
+	
+	//If a user is trying to log in, check it here
+	if($_SERVER['REQUEST_METHOD']=='POST'
+			&& $_POST['action']=='login'
+			&& !empty($_POST['username'])
+			&& !empty($_POST['password'])) {
+		//Include database credentials and connect to the database
+		include_once 'db.inc.php';
+		$db = new PDO(DB_INFO,DB_USER,DB_PASS);
+		$sql = "SELECT COUNT(*) AS num_users
+				FROM admin
+				WHERE username=?
+				AND password=SHA1(?)";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array($_POST['username'], $_POST['password']));
+		$response = $stmt->fetch();
+		if($response['num_users'] > 0) {
+			$_SESSION['loggedin'] = 1;
+		} else {
+			$_SESSION['loggedin'] = NULL;
+		}
+		header('Location: /simple_blog/');
+		exit;
+	}
+	
+	//If an admin is being created, save it here
+	if($_SERVER['REQUEST_METHOD']== 'POST'
+			&& $_POST['action']=='createuser'
+			&& !empty($_POST['username'])
+			&& !empty($_POST['password'])) {
+		//Include database credentials and connect to the database
+		include_once 'db.inc.php';
+		$db = new PDO(DB_INFO,DB_USER,DB_PASS);
+		$sql = "INSERT INTO admin 
+				(username, password)
+				VALUES(?, SHA1(?))";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array($_POST['username'], $_POST['password']));
+		header('Location: /simple_blog/');
+		exit;
+	} 
+	
+	//If the user has chosen to log out, process it here
+	if($_GET['action']=='logout') {
+		session_destroy();
+		header('Location: ../');
+		exit;
 	}
 	//Send the user to the new entry
 	header('Location: /simple_blog/'.$page.'/'.$url);
