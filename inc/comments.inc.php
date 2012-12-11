@@ -20,7 +20,10 @@
 					1 => '<p class="error">Something went wrong while '
 						. 'saving your comment. Please try again!</p>',
 					2 => '<p class="error">Please provide a valid '
-						. 'email address!</p>');
+						. 'email address!</p>',
+					3 => '<p class="error">Please answer the anti-spam '
+						. 'question correctly!</p>');
+			
 			if(isset($_SESSION['error'])) {
 				$error = $errors[$_SESSION['error']];
 			} else {
@@ -43,6 +46,9 @@
 				$c = NULL;
 			}
 			
+			//Generate a challenge question
+			$challenge = $this->generateChallenge();
+			
 			return <<<FORM
 			<form action="/simple_blog/inc/update.inc.php"
 				method="post" id="comment-form">
@@ -56,7 +62,7 @@
 					</label>
 					<label>Comment
 						<textarea rows="10" cols="45" name="comment">$c</textarea>
-					</label>
+					</label>$challenge
 					<input type="hidden" name="blog_id" value="$blog_id" />
 					<input type="submit" name="submit" value="Post Comemnt" />
 					<input type="submit" name="submit" value="Cancel" />
@@ -76,6 +82,12 @@ FORM;
 			//Make sure the email address is valid first
 			if($this->validateEmail($p['email'])==FALSE) {
 				$_SESSION['error'] = 2;
+				return;
+			}
+			
+			//Make sure the challenge question was properly answered
+			if(!$this->verifyResponse($p['s_q'], $p['s_1'], $p['s_2'])) {
+				$_SESSION['error'] = 3;
 				return;
 			}
 			
@@ -239,6 +251,33 @@ FORM;
 				//If something went wrong, return false
 				return FALSE;
 			}
+		}
+		
+		private function generateChallenge() {
+			//Store two random numbers in an array
+			$numbers = array(mt_rand(1,4), mt_rand(1,4));
+			
+			//Store the correct answer in a session
+			$_SESSION['challenge'] = $numbers[0] + $number[1];
+			
+			//Convert the numbers to their ASCII codes
+			$converted = array_map('ord', $numbers);
+			
+			//Generate a math question as HTML markup
+			return "
+					<label>&#87;&#104;&#116;&#32;&#105;&#115;&#32;
+					&#$converted[0];&#32;&#43;&#32;&#$converted[1];&#63;
+					<input type=\"text\" name=\"s_q\" />
+					</label>";
+		}
+		
+		private function verifyResponse($resp) {
+			//Grab the session value and destroy it
+			$val = $_SESSION['challenge'];
+			unset($_SESSION['challenge']);
+			
+			//Returns TRUE if equal, FALSE otherwise
+			return $resp == $val;
 		}
 	}
 ?>
