@@ -133,4 +133,27 @@ FORM;
 	</form>	
 FORM;
 	}
+	
+	function shortenUrl($url) {
+		//Format a call to the bit.ly API
+		$api = 'http://api.bit.ly/shorten';
+		$param = 'version=2.0.1&longUrl='.urlencode($url).'&login=phpfab'
+				. '&apikey=R_7473a7c43c68a73ae08b68ef8e16388e&format=xml';
+		
+		//Open a connection and load the response
+		$uri = $api. "?". $param;
+		
+		$response = file_get_contents($uri);
+		
+		//Parse the output and return the shortened URL
+		$bitly = simplexml_load_string($response);
+		return $bitly->results->nodeKeyVal->shortUrl;
+	}
+	
+	function postToTwitter($title) {
+		$full = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		$short = shortenUrl($full);
+		$status = $title.' '.$short;
+		return 'http://twitter.com/?status='.urlencode($status);
+	}
 ?>

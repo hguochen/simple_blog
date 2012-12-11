@@ -77,8 +77,12 @@
 			$comments = new Comments();
 			$comment_disp = $comments->showComments($e['id']);
 			$comments_form = $comments->showCommentForm($e['id']);
+			
+			//Generate a Post to Twitter link
+			$twitter = postToTwitter($e['title']);
 		} else {
 			$comments_form = NULL;
+			$twitter = NULL;
 		}
 ?>
 	<h2> <?php echo $e['title'] ?></h2>
@@ -89,6 +93,7 @@
 	</p>
 	<?php if($page=='blog'): ?>
 	<p class="backlink">
+		<a href="<?php echo $twitter ?>">Pos to Twitter</a><br/>
 		<a href="./">Back to Latest Entries</a>
 	</p>
 	<h3>Comments for This Entry</h3>
