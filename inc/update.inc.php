@@ -83,7 +83,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 		$comments = new Comments();
 		
 		//Save the comment
-		if($comments->saveComment($_POST)) {
+		$comments->saveComment($_POST);
+		
 			//If available, store the entry the user came from
 			if(isset($_SERVER['HTTP_REFERER'])) {
 				$loc = $_SERVER['HTTP_REFERER'];
@@ -94,9 +95,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 			//Send the user back to the entry
 			header('Location: '.$loc);
 			exit;
-		} else {
-			exit('Something went wrong while saving the comment.');
-		}
 	}
 	
 	//If the delete link is clicked on a comment, confirm it here
@@ -189,7 +187,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'
 	exit;
 	
 } else {
-	
+	unset($_SESSION['c_name'], $_SESSION['c_email'], $_SESSION['c_comment'], $_SESSION['error']);
 	//If both conditions aren't met, sends the user back to the main page
 	header('Location: /simple_blog/');
 	exit;
