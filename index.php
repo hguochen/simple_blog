@@ -59,6 +59,15 @@
 		//Format the image if one exists
 		$img = formatImage($e['image'], $e['title']);
 			
+		if($page=='blog') {
+			//Load the comment project
+			include_once 'inc/comments.inc.php';
+			$comments = new Comments();
+			$comment_disp = $comments->showComments($e['id']);
+			$comments_form = $comments->showCommentForm($e['id']);
+		} else {
+			$comments_form = NULL;
+		}
 ?>
 	<h2> <?php echo $e['title'] ?></h2>
 	<p> <?php echo $img, $e['entry'] ?></p>
@@ -70,7 +79,8 @@
 	<p class="backlink">
 		<a href="./">Back to Latest Entries</a>
 	</p>
-	<?php endif; ?>
+	<h3>Comments for This Entry</h3>
+	<?php echo $comment_disp, $comment_form; endif; ?>
 <?php  
 
 } else {
